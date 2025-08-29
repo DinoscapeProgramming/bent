@@ -2,7 +2,7 @@
 const http = require('http')
 const https = require('https')
 const { URL } = require('url')
-const isStream = require('is-stream')
+const { Stream } = require('stream')
 const caseless = require('caseless')
 const bytes = require('bytesish')
 const bent = require('./core')
@@ -154,7 +154,7 @@ const mkrequest = (statusCodes, method, encoding, headers, baseurl) => (_url, bo
         // noop
       } else if (typeof body === 'string') {
         body = Buffer.from(body)
-      } else if (isStream(body)) {
+      } else if (body instanceof Stream) {
         body.pipe(req)
         body = null
       } else if (typeof body === 'object') {
